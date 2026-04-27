@@ -22,40 +22,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 36px 16px;
+            padding: 40px 16px;
+            overflow-y: auto;
             position: relative;
-            overflow: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            top: -200px;
-            right: -150px;
-            pointer-events: none;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            bottom: -120px;
-            left: -100px;
-            pointer-events: none;
         }
 
         .card {
             background: #fff;
             border-radius: 24px;
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
+            margin: auto;
             overflow: hidden;
             box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
             position: relative;
@@ -75,10 +52,9 @@
             }
         }
 
-        /* HEADER */
         .hdr {
             background: linear-gradient(135deg, #7a0000, #c0392b);
-            padding: 22px 28px 38px;
+            padding: 30px 28px 50px;
             position: relative;
         }
 
@@ -96,36 +72,35 @@
         .logo-row {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 20px;
         }
 
         .logo-box {
             background: #fff;
-            border-radius: 14px;
-            padding: 8px 12px;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-            flex-shrink: 0;
+            border-radius: 12px;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 85px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
         .logo-box img {
-            height: 56px;
-            width: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             display: block;
         }
 
         .hdr-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 15.5px;
+            font-size: 18px;
             color: #fff;
-            line-height: 1.35;
-            margin-bottom: 5px;
-        }
-
-        .hdr-text p {
-            font-size: 11px;
-            color: rgba(255, 255, 255, .72);
-            margin-bottom: 7px;
-            letter-spacing: .4px;
+            margin-bottom: 4px;
+            line-height: 1.2;
         }
 
         .faculty-badge {
@@ -133,190 +108,160 @@
             background: rgba(255, 255, 255, .15);
             border: 1px solid rgba(255, 255, 255, .3);
             border-radius: 100px;
-            padding: 5px 14px;
-            font-size: 10.5px;
+            padding: 4px 12px;
+            font-size: 10px;
             font-weight: 700;
             color: #fff;
-            letter-spacing: .8px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* BODY */
         .body {
-            padding: 6px 28px 32px;
+            padding: 0 28px 30px;
         }
 
         .form-title {
             font-family: 'Playfair Display', serif;
-            font-size: 21px;
+            font-size: 24px;
             color: #1a1a1a;
             text-align: center;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         .form-sub {
             font-size: 13px;
-            color: #999;
+            color: #888;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        /* STEPS */
-        .steps {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 20px;
-        }
-
-        .sdot {
-            height: 6px;
-            border-radius: 3px;
-            background: #e0e0e0;
-            transition: all .35s ease;
-            width: 6px;
-        }
-
-        .sdot.on {
-            background: #c0392b;
-            width: 20px;
-        }
-
-        /* DIVIDER */
         .divider {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 4px 0 14px;
+            margin: 25px 0 15px;
         }
 
         .dline {
             flex: 1;
             height: 1px;
-            background: #f0f0f0;
+            background: #eee;
         }
 
         .dtxt {
-            font-size: 10.5px;
+            font-size: 10px;
             color: #bbb;
-            letter-spacing: 1px;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
         }
 
-        /* FIELD */
         .fg {
-            margin-bottom: 16px;
-            animation: fadeIn .5s ease both;
-        }
-
-        .fg:nth-child(1) {
-            animation-delay: .08s;
-        }
-
-        .fg:nth-child(2) {
-            animation-delay: .16s;
-        }
-
-        .fg:nth-child(3) {
-            animation-delay: .24s;
-        }
-
-        .fg:nth-child(4) {
-            animation-delay: .32s;
-        }
-
-        .fg:nth-child(5) {
-            animation-delay: .4s;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            margin-bottom: 20px;
         }
 
         .lbl {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             color: #555;
-            letter-spacing: .8px;
             text-transform: uppercase;
-            margin-bottom: 7px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .inp {
+        .inp,
+        select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ebebeb;
-            border-radius: 11px;
-            font-family: 'Nunito', sans-serif;
+            padding: 14px 15px;
+            border: 2px solid #f2f2f2;
+            border-radius: 12px;
+            font-family: inherit;
             font-size: 15px;
-            color: #1a1a1a;
             background: #fafafa;
             outline: none;
-            transition: all .25s;
+            transition: .3s;
         }
 
-        .inp:focus {
+        .inp:focus,
+        select:focus {
             border-color: #c0392b;
             background: #fff;
-            box-shadow: 0 0 0 4px rgba(192, 57, 43, .08);
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, .05);
         }
 
-        .inp::placeholder {
-            color: #ccc;
-        }
-
-        /* SELECT */
-        .sel-wrap {
-            position: relative;
-        }
-
-        .sel-wrap select {
+        .sbtn {
             width: 100%;
-            padding: 12px 38px 12px 15px;
-            border: 2px solid #ebebeb;
-            border-radius: 11px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 15px;
-            color: #1a1a1a;
-            background: #fafafa;
-            outline: none;
-            appearance: none;
+            padding: 16px;
+            background: linear-gradient(135deg, #7a0000, #c0392b);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
-            transition: all .25s;
+            margin-top: 25px;
+            box-shadow: 0 8px 20px rgba(192, 57, 43, .3);
+            transition: transform 0.2s;
         }
 
-        .sel-wrap select:focus {
-            border-color: #c0392b;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(192, 57, 43, .08);
+        .sbtn:active {
+            transform: scale(0.98);
         }
 
-        .sel-wrap select option[value=""] {
-            color: #ccc;
+        .sbtn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
         }
 
-        .sel-arrow {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-size: 12px;
-            color: #aaa;
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #333;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            transition: .4s;
+            z-index: 9999;
+            font-weight: 600;
         }
 
-        /* RADIO */
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .upzone {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .upzone.vis {
+            display: block;
+            animation: fadeIn .3s;
+        }
+
+        .fchosen {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            background: #fff5f5;
+            border: 2px solid #c0392b;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .fchosen.vis {
+            display: flex;
+        }
+
         .radio-row {
             display: flex;
             gap: 10px;
@@ -324,7 +269,7 @@
 
         .ropt {
             flex: 1;
-            position: relative;
+            cursor: pointer;
         }
 
         .ropt input {
@@ -335,240 +280,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             padding: 12px;
-            border: 2px solid #ebebeb;
-            border-radius: 11px;
-            background: #fafafa;
-            font-family: 'Nunito', sans-serif;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
             font-size: 14px;
             font-weight: 700;
             color: #777;
-            cursor: pointer;
-            transition: all .25s;
-            user-select: none;
+            transition: .2s;
         }
 
-        .ropt input:checked+.rlbl,
-        .rlbl:hover {
+        .ropt input:checked+.rlbl {
             border-color: #c0392b;
             background: #fff5f5;
             color: #c0392b;
-        }
-
-        .rdot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 2px solid currentColor;
-            transition: background .2s;
-            flex-shrink: 0;
-        }
-
-        .ropt input:checked+.rlbl .rdot {
-            background: #c0392b;
-            border-color: #c0392b;
-        }
-
-        /* UPLOAD */
-        .upzone {
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            background: #fafafa;
-            text-align: center;
-            padding: 22px 16px;
-            cursor: pointer;
-            transition: all .3s;
-            position: relative;
-            overflow: hidden;
-            display: none;
-            margin-top: 12px;
-        }
-
-        .upzone.vis {
-            display: block;
-            animation: fadeIn .3s ease;
-        }
-
-        .upzone:hover,
-        .upzone.drag {
-            border-color: #c0392b;
-            background: #fff5f5;
-        }
-
-        .upzone input {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-
-        .up-ico {
-            font-size: 30px;
-            margin-bottom: 6px;
-        }
-
-        .up-txt {
-            font-size: 13px;
-            color: #888;
-        }
-
-        .up-hint {
-            font-size: 11px;
-            color: #bbb;
-            margin-top: 3px;
-        }
-
-        .fchosen {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            background: #fff5f5;
-            border: 2px solid #c0392b;
-            border-radius: 11px;
-            padding: 11px 14px;
-            margin-top: 10px;
-        }
-
-        .fchosen.vis {
-            display: flex;
-            animation: fadeIn .3s ease;
-        }
-
-        .ficon {
-            width: 34px;
-            height: 34px;
-            background: #c0392b;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            flex-shrink: 0;
-        }
-
-        .finfo {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .fname {
-            font-size: 13px;
-            font-weight: 700;
-            color: #1a1a1a;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .fsize {
-            font-size: 11px;
-            color: #999;
-        }
-
-        .fremove {
-            background: none;
-            border: none;
-            font-size: 17px;
-            color: #c0392b;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        /* SUBMIT */
-        .sbtn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #7a0000, #c0392b);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all .3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 8px;
-            letter-spacing: .4px;
-            box-shadow: 0 6px 22px rgba(192, 57, 43, .35);
-        }
-
-        .sbtn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 32px rgba(192, 57, 43, .45);
-        }
-
-        .sbtn:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        .sbtn:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .spinner {
-            display: none;
-            width: 17px;
-            height: 17px;
-            border: 3px solid rgba(255, 255, 255, .3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin .7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .sbtn.loading .spinner {
-            display: block;
-        }
-
-        .sbtn.loading .btxt {
-            display: none;
-        }
-
-        /* TOAST */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-90px);
-            background: #1a1a1a;
-            color: #fff;
-            padding: 11px 22px;
-            border-radius: 100px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            z-index: 9999;
-            transition: transform .4s cubic-bezier(.23, 1, .32, 1);
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.ok {
-            background: #1a6b1a;
-        }
-
-        .toast.err {
-            background: #8B0000;
         }
     </style>
 </head>
@@ -578,12 +302,11 @@
     <div id="toast" class="toast"></div>
 
     <div class="card">
-        <!-- HEADER -->
         <div class="hdr">
             <div class="logo-row">
                 <div class="logo-box">
-                    <img src="https://script.google.com/macros/s/AKfycbzRHR6mqdqYhewYeaV_cPqa5N4MOL50wz3TiWw5-aNJ2hWiUNGFuQs_D2uKMKTwx3y_/exec"
-                        alt="ECU Logo">
+                    <img src="./download.png" alt="ECU"
+                        onerror="this.src='https://ecu.edu.eg/wp-content/uploads/2021/04/ecu-logo.png'">
                 </div>
                 <div class="hdr-text">
                     <h1>Egyptian Chinese University</h1>
@@ -592,51 +315,37 @@
             </div>
         </div>
 
-        <!-- BODY -->
         <div class="body">
-            <div class="steps">
-                <div class="sdot on" id="s1"></div>
-                <div class="sdot" id="s2"></div>
-                <div class="sdot" id="s3"></div>
-                <div class="sdot" id="s4"></div>
-                <div class="sdot" id="s5"></div>
-            </div>
             <h2 class="form-title">Training Submission</h2>
-            <p class="form-sub">Submit your semester training certificates</p>
+            <p class="form-sub">Fill your details and upload certificates</p>
 
-            <!-- INFO SECTION -->
             <div class="divider">
                 <div class="dline"></div>
-                <div class="dtxt">Student Info</div>
+                <div class="dtxt">Personal Details</div>
                 <div class="dline"></div>
             </div>
 
             <div class="fg">
-                <div class="lbl"> Full Name</div>
-                <input class="inp" id="stuName" type="text" placeholder="Enter your full name" oninput="updSteps()">
+                <label class="lbl">Student Name</label>
+                <input class="inp" id="stuName" type="text" placeholder="Enter your full name">
             </div>
 
             <div class="fg">
-                <div class="lbl"> Student ID</div>
-                <input class="inp" id="stuID" type="text" placeholder="e.g. 2021001" maxlength="15"
-                    oninput="updSteps()">
+                <label class="lbl">Student ID</label>
+                <input class="inp" id="stuID" type="text" placeholder="e.g. 2021001">
             </div>
 
             <div class="fg">
-                <div class="lbl"> Specialization</div>
-                <div class="sel-wrap">
-                    <select id="major" onchange="updSteps()">
-                        <option value="">— Select your major —</option>
-                        <option value="AI">Artificial Intelligence</option>
-                        <option value="CyberSecurity">Cyber Security</option>
-                        <option value="DataScience">Data Science</option>
-                        <option value="CS">Computer Science</option>
-                    </select>
-                    <span class="sel-arrow">▾</span>
-                </div>
+                <label class="lbl">Specialization</label>
+                <select id="major">
+                    <option value="">— Select Major —</option>
+                    <option value="AI">Artificial Intelligence</option>
+                    <option value="CyberSecurity">Cyber Security</option>
+                    <option value="DataScience">Data Science</option>
+                    <option value="CS">Computer Science</option>
+                </select>
             </div>
 
-            <!-- TRAINING SECTION -->
             <div class="divider">
                 <div class="dline"></div>
                 <div class="dtxt">Training Status</div>
@@ -644,118 +353,66 @@
             </div>
 
             <div class="fg">
-                <div class="lbl"> Did you complete any trainings?</div>
+                <label class="lbl">Did you have any trainings?</label>
                 <div class="radio-row">
                     <label class="ropt">
                         <input type="radio" name="tr" value="No" checked onchange="toggleUp()">
-                        <span class="rlbl"><span class="rdot"></span> No</span>
+                        <span class="rlbl">No</span>
                     </label>
                     <label class="ropt">
                         <input type="radio" name="tr" value="Yes" onchange="toggleUp()">
-                        <span class="rlbl"><span class="rdot"></span> Yes</span>
+                        <span class="rlbl">Yes</span>
                     </label>
                 </div>
 
-                <!-- Upload area — hidden by default, shown only when Yes -->
-                <div class="upzone" id="upzone" ondragover="event.preventDefault();this.classList.add('drag')"
-                    ondragleave="this.classList.remove('drag')" ondrop="doDrop(event)">
-                    <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)">
-                    <div class="up-ico">📦</div>
-                    <div class="up-txt">Drop ZIP file here or click to browse</div>
-                    <div class="up-hint">Only .zip files · Max 20MB</div>
+                <div class="upzone" id="upzone">
+                    <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)" style="display:none">
+                    <div onclick="document.getElementById('zipFile').click()">
+                        <div style="font-size:30px">📦</div>
+                        <div style="font-size:13px; color:#666">Click to upload ZIP file</div>
+                    </div>
                 </div>
 
                 <div class="fchosen" id="fchosen">
-                    <div class="ficon">📦</div>
-                    <div class="finfo">
-                        <div class="fname" id="fname">file.zip</div>
-                        <div class="fsize" id="fsize">0 KB</div>
-                    </div>
-                    <button class="fremove" onclick="clearFile()">✕</button>
+                    <span class="fname" id="fname">file.zip</span>
+                    <button onclick="clearFile()"
+                        style="background:none; border:none; color:#c0392b; cursor:pointer; font-weight:bold">✕</button>
                 </div>
             </div>
 
-            <button class="sbtn" id="sbtn" onclick="doSubmit()">
-                <span class="spinner"></span>
-                <span class="btxt">Submit Training Data →</span>
-            </button>
+            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit Data →</button>
         </div>
     </div>
 
     <script>
-        // ===== PASTE YOUR WEB APP URL HERE =====
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRHR6mqdqYhewYeaV_cPqa5N4MOL50wz3TiWw5-aNJ2hWiUNGFuQs_D2uKMKTwx3y_/exec";
-        // ========================================
 
         function toggleUp() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
-            const zone = document.getElementById('upzone');
-            const chosen = document.getElementById('fchosen');
-            if (isYes) {
-                zone.classList.add('vis');
-            } else {
-                zone.classList.remove('vis');
-                chosen.classList.remove('vis');
-                document.getElementById('zipFile').value = '';
-            }
-            updSteps();
+            document.getElementById('upzone').classList.toggle('vis', isYes);
+            if (!isYes) clearFile();
         }
 
         function pickFile(inp) {
             if (!inp.files[0]) return;
-            const f = inp.files[0];
-            document.getElementById('fname').textContent = f.name;
-            document.getElementById('fsize').textContent = (f.size / 1024).toFixed(1) + ' KB';
+            document.getElementById('fname').textContent = inp.files[0].name;
             document.getElementById('upzone').classList.remove('vis');
             document.getElementById('fchosen').classList.add('vis');
-            updSteps();
-        }
-
-        function doDrop(e) {
-            e.preventDefault();
-            document.getElementById('upzone').classList.remove('drag');
-            const f = e.dataTransfer.files[0];
-            if (f && f.name.endsWith('.zip')) {
-                const dt = new DataTransfer();
-                dt.items.add(f);
-                document.getElementById('zipFile').files = dt.files;
-                pickFile(document.getElementById('zipFile'));
-            } else {
-                showToast('⚠️ Only ZIP files are accepted', 'err');
-            }
         }
 
         function clearFile() {
             document.getElementById('zipFile').value = '';
             document.getElementById('fchosen').classList.remove('vis');
-            document.getElementById('upzone').classList.add('vis');
-            updSteps();
+            if (document.querySelector('input[name="tr"]:checked').value === 'Yes')
+                document.getElementById('upzone').classList.add('vis');
         }
 
-        function updSteps() {
-            const name = document.getElementById('stuName').value.trim();
-            const id = document.getElementById('stuID').value.trim();
-            const major = document.getElementById('major').value;
-            const tr = document.querySelector('input[name="tr"]:checked').value;
-            const hasFile = document.getElementById('fchosen').classList.contains('vis');
-
-            let s = 1;
-            if (name) s = 2;
-            if (name && id) s = 3;
-            if (name && id && major) s = 4;
-            if (name && id && major && (tr === 'No' || hasFile)) s = 5;
-
-            ['s1', 's2', 's3', 's4', 's5'].forEach((id, i) => {
-                document.getElementById(id).classList.toggle('on', i < s);
-            });
-        }
-
-        function showToast(msg, type = '') {
+        function showToast(msg, ok = true) {
             const t = document.getElementById('toast');
             t.textContent = msg;
-            t.className = 'toast ' + type;
+            t.style.background = ok ? '#1a6b1a' : '#8b0000';
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3200);
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
         function doSubmit() {
@@ -766,45 +423,35 @@
             const tr = document.querySelector('input[name="tr"]:checked').value;
             const fileInp = document.getElementById('zipFile');
 
-            if (!name) { showToast('⚠️ Please enter your full name', 'err'); return; }
-            if (!id) { showToast('⚠️ Please enter your Student ID', 'err'); return; }
-            if (!major) { showToast('⚠️ Please select your specialization', 'err'); return; }
-            if (tr === 'Yes' && !fileInp.files[0]) {
-                showToast('⚠️ Please upload your ZIP file', 'err'); return;
-            }
+            if (!name || !id || !major) { showToast('Please fill all fields', false); return; }
+            if (tr === 'Yes' && !fileInp.files[0]) { showToast('Please upload ZIP', false); return; }
 
             btn.disabled = true;
-            btn.classList.add('loading');
+            btn.textContent = "Sending...";
 
             const send = (b64 = null, fn = '', mime = '') => {
-                const payload = { studentName: name, studentID: id, major, hasTraining: tr, fileData: b64, fileName: fn, mimeType: mime };
+                const payload = { studentName: name, studentID: id, major: major, hasTraining: tr, fileData: b64, fileName: fn, mimeType: mime };
                 fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
                     .then(r => r.text())
                     .then(res => {
-                        const ok = res.includes('Success');
-                        showToast(ok ? '✅ Submitted successfully!' : res, ok ? 'ok' : 'err');
-                        btn.disabled = false;
-                        btn.classList.remove('loading');
-                        if (ok) setTimeout(() => location.reload(), 1800);
+                        showToast('✅ Done! Check your Sheet');
+                        setTimeout(() => location.reload(), 2000);
                     })
                     .catch(() => {
-                        showToast('❌ Submission failed. Please try again.', 'err');
+                        showToast('❌ Error, try again', false);
                         btn.disabled = false;
-                        btn.classList.remove('loading');
+                        btn.textContent = "Submit Data →";
                     });
             };
 
             if (tr === 'Yes' && fileInp.files[0]) {
                 const reader = new FileReader();
-                reader.onload = () => send(reader.result.split(',')[1], id + '_training.zip', fileInp.files[0].type);
+                reader.onload = () => send(reader.result.split(',')[1], id + '.zip', fileInp.files[0].type);
                 reader.readAsDataURL(fileInp.files[0]);
             } else {
                 send();
             }
         }
-
-        // init
-        toggleUp();
     </script>
 </body>
 
