@@ -385,7 +385,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRHR6mqdqYhewYeaV_cPqa5N4MOL50wz3TiWw5-aNJ2hWiUNGFuQs_D2uKMKTwx3y_/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_O4ZJtSAtgHbOA0BU9YpHgamozrPTKuq-YHK_srJpDhqMmECmLB5QnqLl-uJLjGXA/exec";
 
         function toggleUp() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
@@ -434,7 +434,7 @@
                 fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
                     .then(r => r.text())
                     .then(res => {
-                        showToast('✅ Done! Check your Sheet');
+                        showToast('✅ Done!');
                         setTimeout(() => location.reload(), 2000);
                     })
                     .catch(() => {
