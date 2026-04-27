@@ -4,185 +4,808 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Training Portal</title>
+    <title>ECU Training Portal – CSIS Faculty</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(150deg, #1a0000 0%, #7a0000 45%, #c0392b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 36px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            top: -200px;
+            right: -150px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            bottom: -120px;
+            left: -100px;
+            pointer-events: none;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 520px;
+            overflow: hidden;
+            box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
+            position: relative;
+            z-index: 1;
+            animation: slideUp .55s cubic-bezier(.23, 1, .32, 1) both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HEADER */
+        .hdr {
+            background: linear-gradient(135deg, #7a0000, #c0392b);
+            padding: 22px 28px 38px;
+            position: relative;
+        }
+
+        .hdr::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background: #fff;
+            border-radius: 32px 32px 0 0;
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+            flex-shrink: 0;
+        }
+
+        .logo-box img {
+            height: 56px;
+            width: auto;
+            display: block;
+        }
+
+        .hdr-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 15.5px;
+            color: #fff;
+            line-height: 1.35;
+            margin-bottom: 5px;
+        }
+
+        .hdr-text p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .72);
+            margin-bottom: 7px;
+            letter-spacing: .4px;
+        }
+
+        .faculty-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .3);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        /* BODY */
+        .body {
+            padding: 6px 28px 32px;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 21px;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .form-sub {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* STEPS */
+        .steps {
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .form-card {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #1a73e8;
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #444;
-        }
-
-        input,
-        select,
-        button {
-            width: 100%;
-            padding: 12px;
+            gap: 5px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
+        }
+
+        .sdot {
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            transition: all .35s ease;
+            width: 6px;
+        }
+
+        .sdot.on {
+            background: #c0392b;
+            width: 20px;
+        }
+
+        /* DIVIDER */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 4px 0 14px;
+        }
+
+        .dline {
+            flex: 1;
+            height: 1px;
+            background: #f0f0f0;
+        }
+
+        .dtxt {
+            font-size: 10.5px;
+            color: #bbb;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* FIELD */
+        .fg {
+            margin-bottom: 16px;
+            animation: fadeIn .5s ease both;
+        }
+
+        .fg:nth-child(1) {
+            animation-delay: .08s;
+        }
+
+        .fg:nth-child(2) {
+            animation-delay: .16s;
+        }
+
+        .fg:nth-child(3) {
+            animation-delay: .24s;
+        }
+
+        .fg:nth-child(4) {
+            animation-delay: .32s;
+        }
+
+        .fg:nth-child(5) {
+            animation-delay: .4s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lbl {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #555;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .inp {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ebebeb;
+            border-radius: 11px;
+            font-family: 'Nunito', sans-serif;
             font-size: 15px;
-        }
-
-        input:focus,
-        select:focus {
-            border-color: #1a73e8;
+            color: #1a1a1a;
+            background: #fafafa;
             outline: none;
-            box-shadow: 0 0 5px rgba(26, 115, 232, 0.2);
+            transition: all .25s;
         }
 
-        button {
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            font-weight: bold;
+        .inp:focus {
+            border-color: #c0392b;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, .08);
+        }
+
+        .inp::placeholder {
+            color: #ccc;
+        }
+
+        /* SELECT */
+        .sel-wrap {
+            position: relative;
+        }
+
+        .sel-wrap select {
+            width: 100%;
+            padding: 12px 38px 12px 15px;
+            border: 2px solid #ebebeb;
+            border-radius: 11px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            color: #1a1a1a;
+            background: #fafafa;
+            outline: none;
+            appearance: none;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all .25s;
+        }
+
+        .sel-wrap select:focus {
+            border-color: #c0392b;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(192, 57, 43, .08);
+        }
+
+        .sel-wrap select option[value=""] {
+            color: #ccc;
+        }
+
+        .sel-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* RADIO */
+        .radio-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ropt {
+            flex: 1;
+            position: relative;
+        }
+
+        .ropt input {
+            display: none;
+        }
+
+        .rlbl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border: 2px solid #ebebeb;
+            border-radius: 11px;
+            background: #fafafa;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #777;
+            cursor: pointer;
+            transition: all .25s;
+            user-select: none;
+        }
+
+        .ropt input:checked+.rlbl,
+        .rlbl:hover {
+            border-color: #c0392b;
+            background: #fff5f5;
+            color: #c0392b;
+        }
+
+        .rdot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            transition: background .2s;
+            flex-shrink: 0;
+        }
+
+        .ropt input:checked+.rlbl .rdot {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
+
+        /* UPLOAD */
+        .upzone {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            background: #fafafa;
+            text-align: center;
+            padding: 22px 16px;
+            cursor: pointer;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            margin-top: 12px;
+        }
+
+        .upzone.vis {
+            display: block;
+            animation: fadeIn .3s ease;
+        }
+
+        .upzone:hover,
+        .upzone.drag {
+            border-color: #c0392b;
+            background: #fff5f5;
+        }
+
+        .upzone input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .up-ico {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .up-txt {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .up-hint {
+            font-size: 11px;
+            color: #bbb;
+            margin-top: 3px;
+        }
+
+        .fchosen {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: #fff5f5;
+            border: 2px solid #c0392b;
+            border-radius: 11px;
+            padding: 11px 14px;
             margin-top: 10px;
         }
 
-        button:hover {
-            background-color: #1557b0;
+        .fchosen.vis {
+            display: flex;
+            animation: fadeIn .3s ease;
         }
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        #file-upload-section {
-            display: none;
-            background: #f8f9fa;
-            padding: 15px;
+        .ficon {
+            width: 34px;
+            height: 34px;
+            background: #c0392b;
             border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px dashed #bbb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .finfo {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .fname {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .fsize {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .fremove {
+            background: none;
+            border: none;
+            font-size: 17px;
+            color: #c0392b;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        /* SUBMIT */
+        .sbtn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #7a0000, #c0392b);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            letter-spacing: .4px;
+            box-shadow: 0 6px 22px rgba(192, 57, 43, .35);
+        }
+
+        .sbtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(192, 57, 43, .45);
+        }
+
+        .sbtn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .sbtn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: none;
+            width: 17px;
+            height: 17px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .sbtn.loading .spinner {
+            display: block;
+        }
+
+        .sbtn.loading .btxt {
+            display: none;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-90px);
+            background: #1a1a1a;
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 100px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            z-index: 9999;
+            transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.ok {
+            background: #1a6b1a;
+        }
+
+        .toast.err {
+            background: #8B0000;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="form-card">
-        <h2>Training Submission</h2>
+    <div id="toast" class="toast"></div>
 
-        <label for="studentID">Student ID:</label>
-        <input type="text" id="studentID" placeholder="Enter your ID (e.g. 2021001)" required>
-
-        <label for="hasTraining">Did you have any trainings?</label>
-        <select id="hasTraining" onchange="toggleUploadSection()">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-        </select>
-
-        <div id="file-upload-section">
-            <label for="zipFile">Upload Certificates (ZIP only):</label>
-            <input type="file" id="zipFile" accept=".zip">
+    <div class="card">
+        <!-- HEADER -->
+        <div class="hdr">
+            <div class="logo-row">
+                <div class="logo-box">
+                    <img src="https://script.google.com/macros/s/AKfycbzRHR6mqdqYhewYeaV_cPqa5N4MOL50wz3TiWw5-aNJ2hWiUNGFuQs_D2uKMKTwx3y_/exec"
+                        alt="ECU Logo">
+                </div>
+                <div class="hdr-text">
+                    <h1>Egyptian Chinese University</h1>
+                    <div class="faculty-badge">Faculty of CS &amp; Information Systems</div>
+                </div>
+            </div>
         </div>
 
-        <button id="submitBtn" onclick="processUpload()">Submit Data</button>
+        <!-- BODY -->
+        <div class="body">
+            <div class="steps">
+                <div class="sdot on" id="s1"></div>
+                <div class="sdot" id="s2"></div>
+                <div class="sdot" id="s3"></div>
+                <div class="sdot" id="s4"></div>
+                <div class="sdot" id="s5"></div>
+            </div>
+            <h2 class="form-title">Training Submission</h2>
+            <p class="form-sub">Submit your semester training certificates</p>
+
+            <!-- INFO SECTION -->
+            <div class="divider">
+                <div class="dline"></div>
+                <div class="dtxt">Student Info</div>
+                <div class="dline"></div>
+            </div>
+
+            <div class="fg">
+                <div class="lbl"> Full Name</div>
+                <input class="inp" id="stuName" type="text" placeholder="Enter your full name" oninput="updSteps()">
+            </div>
+
+            <div class="fg">
+                <div class="lbl"> Student ID</div>
+                <input class="inp" id="stuID" type="text" placeholder="e.g. 2021001" maxlength="15"
+                    oninput="updSteps()">
+            </div>
+
+            <div class="fg">
+                <div class="lbl"> Specialization</div>
+                <div class="sel-wrap">
+                    <select id="major" onchange="updSteps()">
+                        <option value="">— Select your major —</option>
+                        <option value="AI">Artificial Intelligence</option>
+                        <option value="CyberSecurity">Cyber Security</option>
+                        <option value="DataScience">Data Science</option>
+                        <option value="CS">Computer Science</option>
+                    </select>
+                    <span class="sel-arrow">▾</span>
+                </div>
+            </div>
+
+            <!-- TRAINING SECTION -->
+            <div class="divider">
+                <div class="dline"></div>
+                <div class="dtxt">Training Status</div>
+                <div class="dline"></div>
+            </div>
+
+            <div class="fg">
+                <div class="lbl"> Did you complete any trainings?</div>
+                <div class="radio-row">
+                    <label class="ropt">
+                        <input type="radio" name="tr" value="No" checked onchange="toggleUp()">
+                        <span class="rlbl"><span class="rdot"></span> No</span>
+                    </label>
+                    <label class="ropt">
+                        <input type="radio" name="tr" value="Yes" onchange="toggleUp()">
+                        <span class="rlbl"><span class="rdot"></span> Yes</span>
+                    </label>
+                </div>
+
+                <!-- Upload area — hidden by default, shown only when Yes -->
+                <div class="upzone" id="upzone" ondragover="event.preventDefault();this.classList.add('drag')"
+                    ondragleave="this.classList.remove('drag')" ondrop="doDrop(event)">
+                    <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)">
+                    <div class="up-ico">📦</div>
+                    <div class="up-txt">Drop ZIP file here or click to browse</div>
+                    <div class="up-hint">Only .zip files · Max 20MB</div>
+                </div>
+
+                <div class="fchosen" id="fchosen">
+                    <div class="ficon">📦</div>
+                    <div class="finfo">
+                        <div class="fname" id="fname">file.zip</div>
+                        <div class="fsize" id="fsize">0 KB</div>
+                    </div>
+                    <button class="fremove" onclick="clearFile()">✕</button>
+                </div>
+            </div>
+
+            <button class="sbtn" id="sbtn" onclick="doSubmit()">
+                <span class="spinner"></span>
+                <span class="btxt">Submit Training Data →</span>
+            </button>
+        </div>
     </div>
 
     <script>
-        // Show or hide file upload based on Yes/No selection
-        function toggleUploadSection() {
-            const selection = document.getElementById('hasTraining').value;
-            const section = document.getElementById('file-upload-section');
-            section.style.display = (selection === 'Yes') ? 'block' : 'none';
+        // ===== PASTE YOUR WEB APP URL HERE =====
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRHR6mqdqYhewYeaV_cPqa5N4MOL50wz3TiWw5-aNJ2hWiUNGFuQs_D2uKMKTwx3y_/exec";
+        // ========================================
+
+        function toggleUp() {
+            const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
+            const zone = document.getElementById('upzone');
+            const chosen = document.getElementById('fchosen');
+            if (isYes) {
+                zone.classList.add('vis');
+            } else {
+                zone.classList.remove('vis');
+                chosen.classList.remove('vis');
+                document.getElementById('zipFile').value = '';
+            }
+            updSteps();
         }
 
-        function processUpload() {
-            const btn = document.getElementById('submitBtn');
-            const sid = document.getElementById('studentID').value;
-            const hasTraining = document.getElementById('hasTraining').value;
-            const fileInput = document.getElementById('zipFile');
+        function pickFile(inp) {
+            if (!inp.files[0]) return;
+            const f = inp.files[0];
+            document.getElementById('fname').textContent = f.name;
+            document.getElementById('fsize').textContent = (f.size / 1024).toFixed(1) + ' KB';
+            document.getElementById('upzone').classList.remove('vis');
+            document.getElementById('fchosen').classList.add('vis');
+            updSteps();
+        }
 
-            // PASTE YOUR WEB APP URL BELOW
-            const scriptURL = "https://script.google.com/macros/s/AKfycbwiXm_YUt3I1LgyCaKERaBUV4T4aKKE44oRmEwUbQlpXNa9kHF_faSyOYDH17UVvogR/exec";
-
-            if (!sid) {
-                alert("Please enter your Student ID.");
-                return;
+        function doDrop(e) {
+            e.preventDefault();
+            document.getElementById('upzone').classList.remove('drag');
+            const f = e.dataTransfer.files[0];
+            if (f && f.name.endsWith('.zip')) {
+                const dt = new DataTransfer();
+                dt.items.add(f);
+                document.getElementById('zipFile').files = dt.files;
+                pickFile(document.getElementById('zipFile'));
+            } else {
+                showToast('⚠️ Only ZIP files are accepted', 'err');
             }
+        }
 
-            if (hasTraining === 'Yes' && !fileInput.files[0]) {
-                alert("Please select a ZIP file to upload.");
-                return;
+        function clearFile() {
+            document.getElementById('zipFile').value = '';
+            document.getElementById('fchosen').classList.remove('vis');
+            document.getElementById('upzone').classList.add('vis');
+            updSteps();
+        }
+
+        function updSteps() {
+            const name = document.getElementById('stuName').value.trim();
+            const id = document.getElementById('stuID').value.trim();
+            const major = document.getElementById('major').value;
+            const tr = document.querySelector('input[name="tr"]:checked').value;
+            const hasFile = document.getElementById('fchosen').classList.contains('vis');
+
+            let s = 1;
+            if (name) s = 2;
+            if (name && id) s = 3;
+            if (name && id && major) s = 4;
+            if (name && id && major && (tr === 'No' || hasFile)) s = 5;
+
+            ['s1', 's2', 's3', 's4', 's5'].forEach((id, i) => {
+                document.getElementById(id).classList.toggle('on', i < s);
+            });
+        }
+
+        function showToast(msg, type = '') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast ' + type;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3200);
+        }
+
+        function doSubmit() {
+            const btn = document.getElementById('sbtn');
+            const name = document.getElementById('stuName').value.trim();
+            const id = document.getElementById('stuID').value.trim();
+            const major = document.getElementById('major').value;
+            const tr = document.querySelector('input[name="tr"]:checked').value;
+            const fileInp = document.getElementById('zipFile');
+
+            if (!name) { showToast('⚠️ Please enter your full name', 'err'); return; }
+            if (!id) { showToast('⚠️ Please enter your Student ID', 'err'); return; }
+            if (!major) { showToast('⚠️ Please select your specialization', 'err'); return; }
+            if (tr === 'Yes' && !fileInp.files[0]) {
+                showToast('⚠️ Please upload your ZIP file', 'err'); return;
             }
 
             btn.disabled = true;
-            btn.innerText = "Processing... Please wait";
+            btn.classList.add('loading');
 
-            const sendToSheet = (fileBase64 = null, fileName = "", mimeType = "") => {
-                const data = {
-                    studentID: sid,
-                    hasTraining: hasTraining,
-                    fileData: fileBase64,
-                    fileName: fileName,
-                    mimeType: mimeType
-                };
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: JSON.stringify(data)
-                })
-                    .then(response => response.text())
-                    .then(result => {
-                        alert(result);
+            const send = (b64 = null, fn = '', mime = '') => {
+                const payload = { studentName: name, studentID: id, major, hasTraining: tr, fileData: b64, fileName: fn, mimeType: mime };
+                fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+                    .then(r => r.text())
+                    .then(res => {
+                        const ok = res.includes('Success');
+                        showToast(ok ? '✅ Submitted successfully!' : res, ok ? 'ok' : 'err');
                         btn.disabled = false;
-                        btn.innerText = "Submit Data";
-                        if (result.includes("Success")) location.reload();
+                        btn.classList.remove('loading');
+                        if (ok) setTimeout(() => location.reload(), 1800);
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert("An error occurred during submission.");
+                    .catch(() => {
+                        showToast('❌ Submission failed. Please try again.', 'err');
                         btn.disabled = false;
-                        btn.innerText = "Submit Data";
+                        btn.classList.remove('loading');
                     });
             };
 
-            // If 'Yes' and file exists, convert to Base64
-            if (hasTraining === 'Yes' && fileInput.files[0]) {
-                const file = fileInput.files[0];
+            if (tr === 'Yes' && fileInp.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function () {
-                    const base64Data = reader.result.split(',')[1];
-                    sendToSheet(base64Data, sid + "_training.zip", file.type);
-                };
-                reader.readAsDataURL(file);
+                reader.onload = () => send(reader.result.split(',')[1], id + '_training.zip', fileInp.files[0].type);
+                reader.readAsDataURL(fileInp.files[0]);
             } else {
-                // If 'No', just send the status
-                sendToSheet();
+                send();
             }
         }
-    </script>
 
+        // init
+        toggleUp();
+    </script>
 </body>
 
 </html>
