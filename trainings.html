@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Training Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1a73e8;
+            outline: none;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.2);
+        }
+
+        button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #1557b0;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #file-upload-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px dashed #bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-card">
+        <h2>Training Submission</h2>
+
+        <label for="studentID">Student ID:</label>
+        <input type="text" id="studentID" placeholder="Enter your ID (e.g. 2021001)" required>
+
+        <label for="hasTraining">Did you have any trainings?</label>
+        <select id="hasTraining" onchange="toggleUploadSection()">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+        </select>
+
+        <div id="file-upload-section">
+            <label for="zipFile">Upload Certificates (ZIP only):</label>
+            <input type="file" id="zipFile" accept=".zip">
+        </div>
+
+        <button id="submitBtn" onclick="processUpload()">Submit Data</button>
+    </div>
+
+    <script>
+        // Show or hide file upload based on Yes/No selection
+        function toggleUploadSection() {
+            const selection = document.getElementById('hasTraining').value;
+            const section = document.getElementById('file-upload-section');
+            section.style.display = (selection === 'Yes') ? 'block' : 'none';
+        }
+
+        function processUpload() {
+            const btn = document.getElementById('submitBtn');
+            const sid = document.getElementById('studentID').value;
+            const hasTraining = document.getElementById('hasTraining').value;
+            const fileInput = document.getElementById('zipFile');
+
+            // PASTE YOUR WEB APP URL BELOW
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwiXm_YUt3I1LgyCaKERaBUV4T4aKKE44oRmEwUbQlpXNa9kHF_faSyOYDH17UVvogR/exec";
+
+            if (!sid) {
+                alert("Please enter your Student ID.");
+                return;
+            }
+
+            if (hasTraining === 'Yes' && !fileInput.files[0]) {
+                alert("Please select a ZIP file to upload.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Processing... Please wait";
+
+            const sendToSheet = (fileBase64 = null, fileName = "", mimeType = "") => {
+                const data = {
+                    studentID: sid,
+                    hasTraining: hasTraining,
+                    fileData: fileBase64,
+                    fileName: fileName,
+                    mimeType: mimeType
+                };
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.text())
+                    .then(result => {
+                        alert(result);
+                        btn.disabled = false;
+                        btn.innerText = "Submit Data";
+                        if (result.includes("Success")) location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("An error occurred during submission.");
+                        btn.disabled = false;
+                        btn.innerText = "Submit Data";
+                    });
+            };
+
+            // If 'Yes' and file exists, convert to Base64
+            if (hasTraining === 'Yes' && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const base64Data = reader.result.split(',')[1];
+                    sendToSheet(base64Data, sid + "_training.zip", file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // If 'No', just send the status
+                sendToSheet();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
