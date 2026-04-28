@@ -53,7 +53,6 @@
             position: relative;
         }
 
-        /* الجزء المسؤول عن شكل المنحنى الأبيض */
         .hdr::after {
             content: '';
             position: absolute;
@@ -257,9 +256,7 @@
 </head>
 
 <body>
-
     <div id="toast" class="toast"></div>
-
     <div class="card">
         <div class="hdr">
             <div class="logo-row">
@@ -335,7 +332,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxyfuXDdTPbkURRvJ_zd0IzLgUtMsftdTsfOeKYVj2zCwaa2mKQtu-2Br9EqR4H79C/exec";
 
         function toggleUp() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
@@ -379,7 +376,8 @@
                 major: major,
                 hasTraining: hasTr,
                 fileData: null,
-                fileName: ""
+                fileName: "",
+                mimeType: "application/zip"
             };
 
             if (hasTr === 'Yes' && fileInp.files[0]) {
@@ -398,13 +396,17 @@
         function sendData(payload) {
             fetch(SCRIPT_URL, {
                 method: "POST",
+                mode: "no-cors",
+                cache: "no-cache",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             })
-                .then(res => {
+                .then(() => {
                     showToast('Data submitted successfully!');
                     setTimeout(() => location.reload(), 2000);
                 })
                 .catch(err => {
+                    console.error(err);
                     showToast('Error submitting data', false);
                     document.getElementById('sbtn').disabled = false;
                     document.getElementById('sbtn').textContent = "Submit Data →";
