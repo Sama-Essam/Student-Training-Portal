@@ -159,8 +159,7 @@
             display: block;
         }
 
-        .inp,
-        select {
+        .inp {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #f0f0f0;
@@ -170,8 +169,7 @@
             background: #fafafa;
         }
 
-        .inp:focus,
-        select:focus {
+        .inp:focus {
             border-color: #c0392b;
             background: #fff;
         }
@@ -216,14 +214,14 @@
             cursor: pointer;
         }
 
-        #trainingDetails {
+        .details-box {
             display: none;
             margin-top: 15px;
             border-left: 3px solid #c0392b;
             padding-left: 15px;
         }
 
-        .training-entry {
+        .entry-card {
             background: #fdfdfd;
             border: 1px solid #eee;
             padding: 15px;
@@ -279,105 +277,91 @@
 
         <div class="body-content">
             <h2 class="form-title">Training Submission</h2>
-            <p class="form-sub">Fill your details and upload certificates</p>
-
-            <div class="divider">
-                <div class="dline"></div>
-                <div class="dtxt">Personal Details</div>
-                <div class="dline"></div>
-            </div>
+            <p class="form-sub">Update your records and certifications</p>
 
             <div class="fg">
-                <label class="lbl">Student ID </label>
-                <input class="inp" id="stuID" type="text" placeholder="Enter your ID ">
+                <label class="lbl">Student ID</label>
+                <input class="inp" id="stuID" type="text" placeholder="Enter your ID">
             </div>
 
             <div class="fg">
                 <label class="lbl">Student Name</label>
-                <input class="inp" id="stuName" type="text" placeholder="Verify your name">
+                <input class="inp" id="stuName" type="text" placeholder="Enter your Name">
             </div>
 
             <div class="divider">
                 <div class="dline"></div>
-                <div class="dtxt">Training Status</div>
+                <div class="dtxt">Planned Courses</div>
                 <div class="dline"></div>
             </div>
-
             <div class="fg">
-                <label class="lbl">Have you completed any training?</label>
+                <label class="lbl">Any planned courses to take?</label>
                 <div class="radio-row">
-                    <label class="ropt">
-                        <input type="radio" name="tr" value="No" checked onchange="toggleUp()">
-                        <span class="rlbl">No</span>
-                    </label>
-                    <label class="ropt">
-                        <input type="radio" name="tr" value="Yes" onchange="toggleUp()">
-                        <span class="rlbl">Yes</span>
-                    </label>
+                    <label class="ropt"><input type="radio" name="plan" value="No" checked onchange="togglePlanned()">
+                        <span class="rlbl">No</span></label>
+                    <label class="ropt"><input type="radio" name="plan" value="Yes" onchange="togglePlanned()"> <span
+                            class="rlbl">Yes</span></label>
                 </div>
-
-                <div id="trainingDetails">
-                    <div id="trainingsList">
-                        <div class="training-entry">
-                            <div class="fg">
-                                <label class="lbl">Certificate Name</label>
-                                <input class="inp cert-name" type="text" placeholder="e.g. Data Science">
-                            </div>
-                            <div class="fg">
-                                <label class="lbl">Company Name</label>
-                                <input class="inp comp-name" type="text" placeholder="e.g. NTI">
-                            </div>
+                <div id="plannedDetails" class="details-box">
+                    <div id="plannedList">
+                        <div class="entry-card">
+                            <input class="inp plan-cert-name" type="text" placeholder="Planned Course Name"
+                                style="margin-bottom: 8px;">
+                            <input class="inp plan-comp-name" type="text" placeholder="Company/Platform">
                         </div>
-                    </div>
-
-                    <button type="button" onclick="addTrainingField()"
-                        style="background: #eee; border: 1px solid #ccc; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; width: 100%; margin-bottom: 15px;">
-                        + Add Another Training
-                    </button>
-
-                    <div class="upzone" id="upzone" onclick="document.getElementById('zipFile').click()">
-                        <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)" style="display:none">
-                        <span style="font-size: 24px;">📦</span>
-                        <p id="filePrompt" style="font-size: 11px; color: #666; font-weight: bold;">Upload ONE ZIP file
-                            containing ALL certificates</p>
                     </div>
                 </div>
             </div>
 
-            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit Data →</button>
+            <div class="divider">
+                <div class="dline"></div>
+                <div class="dtxt">Completed Training</div>
+                <div class="dline"></div>
+            </div>
+            <div class="fg">
+                <label class="lbl">Had any trainings?</label>
+                <div class="radio-row">
+                    <label class="ropt"><input type="radio" name="tr" value="No" checked onchange="toggleTraining()">
+                        <span class="rlbl">No</span></label>
+                    <label class="ropt"><input type="radio" name="tr" value="Yes" onchange="toggleTraining()"> <span
+                            class="rlbl">Yes</span></label>
+                </div>
+                <div id="trainingDetails" class="details-box">
+                    <div id="trainingsList">
+                        <div class="entry-card">
+                            <input class="inp cert-name" type="text" placeholder="Certificate Name"
+                                style="margin-bottom: 8px;">
+                            <input class="inp comp-name" type="text" placeholder="Company Name">
+                        </div>
+                    </div>
+                    <div class="upzone" onclick="document.getElementById('zipFile').click()">
+                        <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)" style="display:none">
+                        <span style="font-size: 24px;">📦</span>
+                        <p id="filePrompt" style="font-size: 11px; color: #666; font-weight: bold;">Upload ZIP for all
+                            certificates</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit All Data →</button>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHV_BYGU9sAb2jcRza-F9SF0U_5HjnIw3xt5iLKirIl2UzazClayBtyMAKI8E438Kd/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoHMcnmReiEkyUMuKMcQEib0go400Ho72owMco8nXQ3touxi8clTqpq_i6t2lvT2Wm/exec";
 
-        function toggleUp() {
+        function togglePlanned() {
+            const isYes = document.querySelector('input[name="plan"]:checked').value === 'Yes';
+            document.getElementById('plannedDetails').style.display = isYes ? 'block' : 'none';
+        }
+
+        function toggleTraining() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
             document.getElementById('trainingDetails').style.display = isYes ? 'block' : 'none';
         }
 
-        function addTrainingField() {
-            const container = document.getElementById('trainingsList');
-            const newEntry = document.createElement('div');
-            newEntry.className = 'training-entry';
-            newEntry.style.borderLeft = "3px solid #c0392b";
-            newEntry.innerHTML = `
-                <div class="fg">
-                    <label class="lbl">Certificate Name</label>
-                    <input class="inp cert-name" type="text" placeholder="Next Certificate">
-                </div>
-                <div class="fg">
-                    <label class="lbl">Company Name</label>
-                    <input class="inp comp-name" type="text" placeholder="Next Company">
-                </div>
-            `;
-            container.appendChild(newEntry);
-        }
-
         function pickFile(inp) {
-            if (inp.files[0]) {
-                document.getElementById('filePrompt').textContent = "Selected: " + inp.files[0].name;
-            }
+            if (inp.files[0]) document.getElementById('filePrompt').textContent = "Selected: " + inp.files[0].name;
         }
 
         function showToast(msg, ok = true) {
@@ -392,42 +376,39 @@
             const btn = document.getElementById('sbtn');
             const id = document.getElementById('stuID').value.trim();
             const name = document.getElementById('stuName').value.trim();
+            const hasPlan = document.querySelector('input[name="plan"]:checked').value;
             const hasTr = document.querySelector('input[name="tr"]:checked').value;
             const fileInp = document.getElementById('zipFile');
 
-            if (!id) {
-                showToast('Student ID is required', false);
-                return;
-            }
+            if (!id) { showToast('Student ID is required', false); return; }
 
-            // تجميع كل الشهادات والشركات
-            const certElements = document.querySelectorAll('.cert-name');
-            const compElements = document.querySelectorAll('.comp-name');
-            let certs = [];
-            let comps = [];
+            let planCerts = []; let planComps = [];
+            document.querySelectorAll('.plan-cert-name').forEach(el => { if (el.value) planCerts.push(el.value); });
+            document.querySelectorAll('.plan-comp-name').forEach(el => { if (el.value) planComps.push(el.value); });
 
-            certElements.forEach(el => { if (el.value.trim()) certs.push(el.value.trim()); });
-            compElements.forEach(el => { if (el.value.trim()) comps.push(el.value.trim()); });
+            let certs = []; let comps = [];
+            document.querySelectorAll('.cert-name').forEach(el => { if (el.value) certs.push(el.value); });
+            document.querySelectorAll('.comp-name').forEach(el => { if (el.value) comps.push(el.value); });
 
-            btn.disabled = true;
-            btn.textContent = "Processing...";
+            btn.disabled = true; btn.textContent = "Processing...";
 
             let payload = {
-                studentName: name,
                 studentID: id,
+                studentName: name,
+                hasPlanned: hasPlan,
+                plannedCert: planCerts.join(" | "),
+                plannedComp: planComps.join(" | "),
                 hasTraining: hasTr,
                 certificate: certs.join(" | "),
                 company: comps.join(" | "),
-                fileData: null,
-                fileName: "",
-                mimeType: "application/zip"
+                fileData: null, fileName: "", mimeType: "application/zip"
             };
 
             if (hasTr === 'Yes' && fileInp.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     payload.fileData = e.target.result.split(',')[1];
-                    payload.fileName = id + "_Certificates.zip";
+                    payload.fileName = id + "_Certs.zip";
                     sendData(payload);
                 };
                 reader.readAsDataURL(fileInp.files[0]);
@@ -440,18 +421,15 @@
             fetch(SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
-                cache: "no-cache",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(payload)
             })
                 .then(() => {
                     showToast('Data submitted successfully!');
                     setTimeout(() => location.reload(), 2000);
                 })
-                .catch(err => {
+                .catch(() => {
                     showToast('Error submitting data', false);
                     document.getElementById('sbtn').disabled = false;
-                    document.getElementById('sbtn').textContent = "Submit Data →";
                 });
         }
     </script>
