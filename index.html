@@ -5,308 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECU Training Portal – CSIS Faculty</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(150deg, #1a0000 0%, #7a0000 45%, #c0392b 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 16px;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
-            overflow: hidden;
-            box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
-            position: relative;
-            z-index: 1;
-            animation: slideUp .55s cubic-bezier(.23, 1, .32, 1) both;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hdr {
-            background: linear-gradient(135deg, #7a0000, #c0392b);
-            padding: 30px 28px 50px;
-            position: relative;
-        }
-
-        .hdr::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 32px;
-            background: #fff;
-            border-radius: 32px 32px 0 0;
-        }
-
-        .logo-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-box {
-            background: #fff;
-            border-radius: 12px;
-            padding: 5px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 85px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .logo-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .hdr-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: #fff;
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-
-        .faculty-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, .15);
-            border: 1px solid rgba(255, 255, 255, .3);
-            border-radius: 100px;
-            padding: 4px 12px;
-            font-size: 10px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* BODY */
-        .body {
-            padding: 0 28px 30px;
-        }
-
-        .form-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            color: #1a1a1a;
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .form-sub {
-            font-size: 13px;
-            color: #888;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 25px 0 15px;
-        }
-
-        .dline {
-            flex: 1;
-            height: 1px;
-            background: #eee;
-        }
-
-        .dtxt {
-            font-size: 10px;
-            color: #bbb;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-        }
-
-        .fg {
-            margin-bottom: 20px;
-        }
-
-        .lbl {
-            font-size: 11px;
-            font-weight: 800;
-            color: #555;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .inp,
-        select {
-            width: 100%;
-            padding: 14px 15px;
-            border: 2px solid #f2f2f2;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 15px;
-            background: #fafafa;
-            outline: none;
-            transition: .3s;
-        }
-
-        .inp:focus,
-        select:focus {
-            border-color: #c0392b;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(192, 57, 43, .05);
-        }
-
-        .sbtn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #7a0000, #c0392b);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 25px;
-            box-shadow: 0 8px 20px rgba(192, 57, 43, .3);
-            transition: transform 0.2s;
-        }
-
-        .sbtn:active {
-            transform: scale(0.98);
-        }
-
-        .sbtn:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-        }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #333;
-            color: #fff;
-            padding: 12px 25px;
-            border-radius: 50px;
-            transition: .4s;
-            z-index: 9999;
-            font-weight: 600;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .upzone {
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .upzone.vis {
-            display: block;
-            animation: fadeIn .3s;
-        }
-
-        .fchosen {
-            display: none;
-            align-items: center;
-            gap: 12px;
-            background: #fff5f5;
-            border: 2px solid #c0392b;
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 15px;
-        }
-
-        .fchosen.vis {
-            display: flex;
-        }
-
-        .radio-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .ropt {
-            flex: 1;
-            cursor: pointer;
-        }
-
-        .ropt input {
-            display: none;
-        }
-
-        .rlbl {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-            border: 2px solid #f0f0f0;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #777;
-            transition: .2s;
-        }
-
-        .ropt input:checked+.rlbl {
-            border-color: #c0392b;
-            background: #fff5f5;
-            color: #c0392b;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; background: linear-gradient(150deg, #1a0000 0%, #7a0000 45%, #c0392b 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+        .card { background: #fff; border-radius: 24px; width: 100%; max-width: 500px; margin: auto; overflow: hidden; box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45); position: relative; z-index: 1; animation: slideUp .55s cubic-bezier(.23, 1, .32, 1) both; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .hdr { background: linear-gradient(135deg, #7a0000, #c0392b); padding: 30px 28px 50px; position: relative; }
+        .hdr::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 32px; background: #fff; border-radius: 32px 32px 0 0; }
+        .logo-row { display: flex; align-items: center; gap: 20px; }
+        .logo-box { background: #fff; border-radius: 12px; padding: 5px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); width: 85px; height: 60px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .hdr-text h1 { font-family: 'Playfair Display', serif; font-size: 18px; color: #fff; line-height: 1.2; }
+        .faculty-badge { display: inline-block; background: rgba(255, 255, 255, .15); border: 1px solid rgba(255, 255, 255, .3); border-radius: 100px; padding: 4px 12px; font-size: 10px; font-weight: 700; color: #fff; text-transform: uppercase; }
+        .body { padding: 0 28px 30px; }
+        .form-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #1a1a1a; text-align: center; }
+        .form-sub { font-size: 13px; color: #888; text-align: center; margin-bottom: 25px; }
+        .divider { display: flex; align-items: center; gap: 10px; margin: 25px 0 15px; }
+        .dline { flex: 1; height: 1px; background: #eee; }
+        .dtxt { font-size: 10px; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+        .fg { margin-bottom: 20px; }
+        .lbl { font-size: 11px; font-weight: 800; color: #555; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .inp, select { width: 100%; padding: 14px 15px; border: 2px solid #f2f2f2; border-radius: 12px; font-family: inherit; font-size: 15px; background: #fafafa; outline: none; transition: .3s; }
+        .inp:focus, select:focus { border-color: #c0392b; background: #fff; box-shadow: 0 0 0 4px rgba(192, 57, 43, .05); }
+        .sbtn { width: 100%; padding: 16px; background: linear-gradient(135deg, #7a0000, #c0392b); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 25px; box-shadow: 0 8px 20px rgba(192, 57, 43, .3); transition: .2s; }
+        .sbtn:active { transform: scale(0.98); }
+        .sbtn:disabled { opacity: .6; cursor: not-allowed; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); color: #fff; padding: 12px 25px; border-radius: 50px; transition: .4s; z-index: 9999; font-weight: 600; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .upzone { border: 2px dashed #ddd; border-radius: 12px; padding: 25px; text-align: center; cursor: pointer; margin-top: 15px; display: none; }
+        .upzone.vis { display: block; }
+        .fchosen { display: none; align-items: center; gap: 12px; background: #fff5f5; border: 2px solid #c0392b; border-radius: 12px; padding: 12px; margin-top: 15px; }
+        .fchosen.vis { display: flex; }
+        .radio-row { display: flex; gap: 10px; }
+        .ropt { flex: 1; cursor: pointer; }
+        .ropt input { display: none; }
+        .rlbl { display: flex; align-items: center; justify-content: center; padding: 12px; border: 2px solid #f0f0f0; border-radius: 12px; font-size: 14px; font-weight: 700; color: #777; transition: .2s; }
+        .ropt input:checked+.rlbl { border-color: #c0392b; background: #fff5f5; color: #c0392b; }
     </style>
 </head>
 
 <body>
-
     <div id="toast" class="toast"></div>
-
     <div class="card">
         <div class="hdr">
             <div class="logo-row">
                 <div class="logo-box">
-                    <img src="./download.png" alt="ECU"
-                        onerror="this.src='https://ecu.edu.eg/wp-content/uploads/2021/04/ecu-logo.png'">
+                    <img src="https://ecu.edu.eg/wp-content/uploads/2021/04/ecu-logo.png" alt="ECU">
                 </div>
                 <div class="hdr-text">
                     <h1>Egyptian Chinese University</h1>
@@ -332,7 +77,7 @@
 
             <div class="fg">
                 <label class="lbl">Student ID</label>
-                <input class="inp" id="stuID" type="text" placeholder="Your ID ">
+                <input class="inp" id="stuID" type="text" placeholder="Your ID">
             </div>
 
             <div class="fg">
@@ -375,8 +120,7 @@
 
                 <div class="fchosen" id="fchosen">
                     <span class="fname" id="fname">file.zip</span>
-                    <button onclick="clearFile()"
-                        style="background:none; border:none; color:#c0392b; cursor:pointer; font-weight:bold">✕</button>
+                    <button onclick="clearFile()" style="background:none; border:none; color:#c0392b; cursor:pointer; font-weight:bold">✕</button>
                 </div>
             </div>
 
@@ -385,7 +129,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-QReGDpt9CpwLvEzuoioBZlXu0alcj3D1fWzUlfwbYPj2PGEeWZMSvaLvJBfLSAIr/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoiboBcGw1uHyT-_JStQCdHLIcTEqQ0yVOyeFbtVQr5n2aKJQSCgmSgtYVo7jO2a7U/exec";
 
         function toggleUp() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
@@ -427,21 +171,34 @@
             if (tr === 'Yes' && !fileInp.files[0]) { showToast('Please upload ZIP', false); return; }
 
             btn.disabled = true;
-            btn.textContent = "Sending...";
+            btn.textContent = "Processing...";
 
             const send = (b64 = null, fn = '', mime = '') => {
-                const payload = { studentName: name, studentID: id, major: major, hasTraining: tr, fileData: b64, fileName: fn, mimeType: mime };
-                fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
-                    .then(r => r.text())
-                    .then(res => {
-                        showToast('✅ Done!');
-                        setTimeout(() => location.reload(), 2000);
-                    })
-                    .catch(() => {
-                        showToast('❌ Error, try again', false);
-                        btn.disabled = false;
-                        btn.textContent = "Submit Data →";
-                    });
+                const payload = { 
+                    studentName: name, 
+                    studentID: id, 
+                    major: major, 
+                    hasTraining: tr, 
+                    fileData: b64, 
+                    fileName: fn, 
+                    mimeType: mime 
+                };
+
+                fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify(payload),
+                    mode: 'no-cors' 
+                })
+                .then(() => {
+                    showToast('✅ Success! Check the sheet.');
+                    setTimeout(() => location.reload(), 2000);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    showToast('❌ Error, try again', false);
+                    btn.disabled = false;
+                    btn.textContent = "Submit Data →";
+                });
             };
 
             if (tr === 'Yes' && fileInp.files[0]) {
@@ -454,5 +211,4 @@
         }
     </script>
 </body>
-
 </html>
