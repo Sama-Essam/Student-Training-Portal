@@ -49,9 +49,9 @@
     <div id="toast" class="toast"></div>
     <div class="card">
         <div class="hdr">
-           < div class="logo-box">
-                    <img src="./download.png" alt="ECU"
-                        onerror="this.src='https://ecu.edu.eg/wp-content/uploads/2021/04/ecu-logo.png'">
+          <div class="logo-row">
+                <div class="logo-box">
+                    <img src="./download.png" alt="ECU">
                 </div>
                 <div class="hdr-text">
                     <h1>Egyptian Chinese University</h1>
@@ -187,7 +187,7 @@
                 xhr.open("POST", SCRIPT_URL, true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
-                        showToast('✅ Done! Check your spreadsheet.');
+                        showToast('✅ Done');
                         setTimeout(() => location.reload(), 2500);
                     }
                 };
