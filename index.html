@@ -49,9 +49,9 @@
     <div id="toast" class="toast"></div>
     <div class="card">
         <div class="hdr">
-            <div class="logo-row">
-                <div class="logo-box">
-                    <img src="./download.png" alt="ECU">
+           < div class="logo-box">
+                    <img src="./download.png" alt="ECU"
+                        onerror="this.src='https://ecu.edu.eg/wp-content/uploads/2021/04/ecu-logo.png'">
                 </div>
                 <div class="hdr-text">
                     <h1>Egyptian Chinese University</h1>
@@ -129,7 +129,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoiboBcGw1uHyT-_JStQCdHLIcTEqQ0yVOyeFbtVQr5n2aKJQSCgmSgtYVo7jO2a7U/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDJh4eIzNlH_0yO1ISC7aSaAaY6NDXXYnB1EKhP0_yPBUGC5qE-LxB66xlCyt0UdY8/exec";
 
         function toggleUp() {
             const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
@@ -168,47 +168,50 @@
             const fileInp = document.getElementById('zipFile');
 
             if (!name || !id || !major) { showToast('Please fill all fields', false); return; }
-            if (tr === 'Yes' && !fileInp.files[0]) { showToast('Please upload ZIP', false); return; }
 
             btn.disabled = true;
-            btn.textContent = "Processing...";
+            btn.textContent = "Sending...";
 
-            const send = (b64 = null, fn = '', mime = '') => {
-                const payload = { 
-                    studentName: name, 
-                    studentID: id, 
-                    major: major, 
-                    hasTraining: tr, 
-                    fileData: b64, 
-                    fileName: fn, 
-                    mimeType: mime 
+            const payload = {
+                studentID: id,
+                studentName: name,
+                major: major,
+                hasTraining: tr,
+                fileData: null,
+                fileName: "",
+                mimeType: ""
+            };
+
+            const finalizeSend = () => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", SCRIPT_URL, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        showToast('✅ Done! Check your spreadsheet.');
+                        setTimeout(() => location.reload(), 2500);
+                    }
                 };
-
-                fetch(SCRIPT_URL, { 
-                    method: 'POST', 
-                    body: JSON.stringify(payload),
-                    mode: 'no-cors' 
-                })
-                .then(() => {
-                    showToast('✅ Success! Check the sheet.');
-                    setTimeout(() => location.reload(), 2000);
-                })
-                .catch((err) => {
-                    console.error(err);
-                    showToast('❌ Error, try again', false);
+                xhr.onerror = function() {
+                    showToast('❌ Network Error', false);
                     btn.disabled = false;
-                    btn.textContent = "Submit Data →";
-                });
+                };
+                xhr.send(JSON.stringify(payload));
             };
 
             if (tr === 'Yes' && fileInp.files[0]) {
                 const reader = new FileReader();
-                reader.onload = () => send(reader.result.split(',')[1], id + '.zip', fileInp.files[0].type);
+                reader.onload = function(e) {
+                    payload.fileData = e.target.result.split(',')[1];
+                    payload.fileName = id + ".zip";
+                    payload.mimeType = fileInp.files[0].type;
+                    finalizeSend();
+                };
                 reader.readAsDataURL(fileInp.files[0]);
             } else {
-                send();
+                finalizeSend();
             }
         }
     </script>
 </body>
+
 </html>
