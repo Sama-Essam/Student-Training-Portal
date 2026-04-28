@@ -111,20 +111,6 @@
             padding: 0 30px 30px;
         }
 
-        .form-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            text-align: center;
-            color: #222;
-        }
-
-        .form-sub {
-            font-size: 13px;
-            color: #777;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
         .divider {
             display: flex;
             align-items: center;
@@ -205,15 +191,6 @@
             color: #c0392b;
         }
 
-        .upzone {
-            border: 2px dashed #ccc;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 15px;
-            cursor: pointer;
-        }
-
         .details-box {
             display: none;
             margin-top: 15px;
@@ -227,6 +204,41 @@
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
+        }
+
+        .add-btn {
+            background: #f8f8f8;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #eee;
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+
+        .upzone {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upzone:hover {
+            border-color: #c0392b;
+            background: #fffafa;
         }
 
         .sbtn {
@@ -276,17 +288,13 @@
         </div>
 
         <div class="body-content">
-            <h2 class="form-title">Training Submission</h2>
-            <p class="form-sub">Update your records and certifications</p>
-
-            <div class="fg">
+            <div class="fg" style="margin-top: 10px;">
                 <label class="lbl">Student ID</label>
-                <input class="inp" id="stuID" type="text" placeholder="Enter your ID">
+                <input class="inp" id="stuID" type="text" placeholder="Enter ID">
             </div>
-
             <div class="fg">
                 <label class="lbl">Student Name</label>
-                <input class="inp" id="stuName" type="text" placeholder="Enter your Name">
+                <input class="inp" id="stuName" type="text" placeholder="Full Name">
             </div>
 
             <div class="divider">
@@ -297,19 +305,20 @@
             <div class="fg">
                 <label class="lbl">Any planned courses to take?</label>
                 <div class="radio-row">
-                    <label class="ropt"><input type="radio" name="plan" value="No" checked onchange="togglePlanned()">
-                        <span class="rlbl">No</span></label>
-                    <label class="ropt"><input type="radio" name="plan" value="Yes" onchange="togglePlanned()"> <span
-                            class="rlbl">Yes</span></label>
+                    <label class="ropt"><input type="radio" name="plan" value="No" checked
+                            onchange="toggleBox('plannedDetails', this.value)"> <span class="rlbl">No</span></label>
+                    <label class="ropt"><input type="radio" name="plan" value="Yes"
+                            onchange="toggleBox('plannedDetails', this.value)"> <span class="rlbl">Yes</span></label>
                 </div>
                 <div id="plannedDetails" class="details-box">
                     <div id="plannedList">
-                        <div class="entry-card">
-                            <input class="inp plan-cert-name" type="text" placeholder="Planned Course Name"
-                                style="margin-bottom: 8px;">
-                            <input class="inp plan-comp-name" type="text" placeholder="Company/Platform">
+                        <div class="entry-card planned-entry">
+                            <input class="inp p-cert" type="text" placeholder="Course Name" style="margin-bottom:8px">
+                            <input class="inp p-comp" type="text" placeholder="Company/Platform">
                         </div>
                     </div>
+                    <button class="add-btn" onclick="addEntry('plannedList', 'planned-entry')">+ Add Another Planned
+                        Course</button>
                 </div>
             </div>
 
@@ -321,90 +330,89 @@
             <div class="fg">
                 <label class="lbl">Had any trainings?</label>
                 <div class="radio-row">
-                    <label class="ropt"><input type="radio" name="tr" value="No" checked onchange="toggleTraining()">
-                        <span class="rlbl">No</span></label>
-                    <label class="ropt"><input type="radio" name="tr" value="Yes" onchange="toggleTraining()"> <span
-                            class="rlbl">Yes</span></label>
+                    <label class="ropt"><input type="radio" name="tr" value="No" checked
+                            onchange="toggleBox('trainingDetails', this.value)"> <span class="rlbl">No</span></label>
+                    <label class="ropt"><input type="radio" name="tr" value="Yes"
+                            onchange="toggleBox('trainingDetails', this.value)"> <span class="rlbl">Yes</span></label>
                 </div>
                 <div id="trainingDetails" class="details-box">
                     <div id="trainingsList">
-                        <div class="entry-card">
-                            <input class="inp cert-name" type="text" placeholder="Certificate Name"
-                                style="margin-bottom: 8px;">
-                            <input class="inp comp-name" type="text" placeholder="Company Name">
+                        <div class="entry-card training-entry">
+                            <input class="inp t-cert" type="text" placeholder="Certificate Name"
+                                style="margin-bottom:8px">
+                            <input class="inp t-comp" type="text" placeholder="Company Name">
                         </div>
                     </div>
+                    <button class="add-btn" onclick="addEntry('trainingsList', 'training-entry')">+ Add Another
+                        Completed Training</button>
+
                     <div class="upzone" onclick="document.getElementById('zipFile').click()">
-                        <input type="file" id="zipFile" accept=".zip" onchange="pickFile(this)" style="display:none">
+                        <input type="file" id="zipFile" accept=".zip" onchange="updateFileName(this)"
+                            style="display:none">
                         <span style="font-size: 24px;">📦</span>
-                        <p id="filePrompt" style="font-size: 11px; color: #666; font-weight: bold;">Upload ZIP for all
-                            certificates</p>
+                        <p id="filePrompt" style="font-size: 11px; color: #666; font-weight: bold; margin-top: 5px;">
+                            Upload ONE ZIP file containing ALL certificates</p>
                     </div>
                 </div>
             </div>
 
-            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit All Data →</button>
+            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit Data →</button>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxoHMcnmReiEkyUMuKMcQEib0go400Ho72owMco8nXQ3touxi8clTqpq_i6t2lvT2Wm/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1AknMhalsrYkKuo5WgaySAPAwQs0TiVOCvL21kjJMGTCddCQzWOmbLVS8XMiK4qTh/exec";
 
-        function togglePlanned() {
-            const isYes = document.querySelector('input[name="plan"]:checked').value === 'Yes';
-            document.getElementById('plannedDetails').style.display = isYes ? 'block' : 'none';
+        function toggleBox(id, val) {
+            document.getElementById(id).style.display = (val === 'Yes') ? 'block' : 'none';
         }
 
-        function toggleTraining() {
-            const isYes = document.querySelector('input[name="tr"]:checked').value === 'Yes';
-            document.getElementById('trainingDetails').style.display = isYes ? 'block' : 'none';
+        function addEntry(containerId, className) {
+            const container = document.getElementById(containerId);
+            const newEntry = container.firstElementChild.cloneNode(true);
+            newEntry.querySelectorAll('input').forEach(i => i.value = '');
+            container.appendChild(newEntry);
         }
 
-        function pickFile(inp) {
-            if (inp.files[0]) document.getElementById('filePrompt').textContent = "Selected: " + inp.files[0].name;
+        function updateFileName(inp) {
+            if (inp.files[0]) {
+                document.getElementById('filePrompt').textContent = "Selected: " + inp.files[0].name;
+                document.getElementById('filePrompt').style.color = "#c0392b";
+            }
         }
 
         function showToast(msg, ok = true) {
             const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.style.background = ok ? '#27ae60' : '#c0392b';
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+            t.textContent = msg; t.style.background = ok ? '#27ae60' : '#c0392b';
+            t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000);
         }
 
         function doSubmit() {
             const btn = document.getElementById('sbtn');
             const id = document.getElementById('stuID').value.trim();
-            const name = document.getElementById('stuName').value.trim();
-            const hasPlan = document.querySelector('input[name="plan"]:checked').value;
-            const hasTr = document.querySelector('input[name="tr"]:checked').value;
-            const fileInp = document.getElementById('zipFile');
-
             if (!id) { showToast('Student ID is required', false); return; }
 
-            let planCerts = []; let planComps = [];
-            document.querySelectorAll('.plan-cert-name').forEach(el => { if (el.value) planCerts.push(el.value); });
-            document.querySelectorAll('.plan-comp-name').forEach(el => { if (el.value) planComps.push(el.value); });
-
-            let certs = []; let comps = [];
-            document.querySelectorAll('.cert-name').forEach(el => { if (el.value) certs.push(el.value); });
-            document.querySelectorAll('.comp-name').forEach(el => { if (el.value) comps.push(el.value); });
+            let pCerts = []; document.querySelectorAll('.p-cert').forEach(i => { if (i.value) pCerts.push(i.value); });
+            let pComps = []; document.querySelectorAll('.p-comp').forEach(i => { if (i.value) pComps.push(i.value); });
+            let tCerts = []; document.querySelectorAll('.t-cert').forEach(i => { if (i.value) tCerts.push(i.value); });
+            let tComps = []; document.querySelectorAll('.t-comp').forEach(i => { if (i.value) tComps.push(i.value); });
 
             btn.disabled = true; btn.textContent = "Processing...";
 
             let payload = {
                 studentID: id,
-                studentName: name,
-                hasPlanned: hasPlan,
-                plannedCert: planCerts.join(" | "),
-                plannedComp: planComps.join(" | "),
-                hasTraining: hasTr,
-                certificate: certs.join(" | "),
-                company: comps.join(" | "),
+                studentName: document.getElementById('stuName').value,
+                hasPlanned: document.querySelector('input[name="plan"]:checked').value,
+                plannedCert: pCerts.join(" | "),
+                plannedComp: pComps.join(" | "),
+                hasTraining: document.querySelector('input[name="tr"]:checked').value,
+                certificate: tCerts.join(" | "),
+                company: tComps.join(" | "),
                 fileData: null, fileName: "", mimeType: "application/zip"
             };
 
-            if (hasTr === 'Yes' && fileInp.files[0]) {
+            const fileInp = document.getElementById('zipFile');
+            if (payload.hasTraining === 'Yes' && fileInp.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     payload.fileData = e.target.result.split(',')[1];
@@ -418,19 +426,9 @@
         }
 
         function sendData(payload) {
-            fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify(payload)
-            })
-                .then(() => {
-                    showToast('Data submitted successfully!');
-                    setTimeout(() => location.reload(), 2000);
-                })
-                .catch(() => {
-                    showToast('Error submitting data', false);
-                    document.getElementById('sbtn').disabled = false;
-                });
+            fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) })
+                .then(() => { showToast('Data submitted successfully!'); setTimeout(() => location.reload(), 2000); })
+                .catch(() => { showToast('Submission Error', false); document.getElementById('sbtn').disabled = false; });
         }
     </script>
 </body>
