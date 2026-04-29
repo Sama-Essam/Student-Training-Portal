@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECU Training Portal – CSIS Faculty</title>
+    <title>ECU Training Portal</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;800&display=swap"
         rel="stylesheet">
@@ -214,31 +214,15 @@
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             transition: 0.3s;
         }
 
         .add-btn:hover {
-            background: #eee;
             border-color: #c0392b;
             color: #c0392b;
-        }
-
-        .upzone {
-            border: 2px dashed #ccc;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .upzone:hover {
-            border-color: #c0392b;
-            background: #fffafa;
         }
 
         .sbtn {
@@ -296,6 +280,10 @@
                 <label class="lbl">Student Name</label>
                 <input class="inp" id="stuName" type="text" placeholder="Full Name">
             </div>
+            <div class="fg">
+                <label class="lbl">Department / Section</label>
+                <input class="inp" id="dept" type="text" placeholder="e.g. Computer Science">
+            </div>
 
             <div class="divider">
                 <div class="dline"></div>
@@ -312,13 +300,12 @@
                 </div>
                 <div id="plannedDetails" class="details-box">
                     <div id="plannedList">
-                        <div class="entry-card planned-entry">
+                        <div class="entry-card p-entry">
                             <input class="inp p-cert" type="text" placeholder="Course Name" style="margin-bottom:8px">
-                            <input class="inp p-comp" type="text" placeholder="Company/Platform">
+                            <input class="inp p-comp" type="text" placeholder="Platform/Company">
                         </div>
                     </div>
-                    <button class="add-btn" onclick="addEntry('plannedList', 'planned-entry')">+ Add Another Planned
-                        Course</button>
+                    <button class="add-btn" onclick="addEntry('plannedList')">+ Add Another Planned Course</button>
                 </div>
             </div>
 
@@ -337,48 +324,33 @@
                 </div>
                 <div id="trainingDetails" class="details-box">
                     <div id="trainingsList">
-                        <div class="entry-card training-entry">
+                        <div class="entry-card t-entry">
                             <input class="inp t-cert" type="text" placeholder="Certificate Name"
                                 style="margin-bottom:8px">
                             <input class="inp t-comp" type="text" placeholder="Company Name">
                         </div>
                     </div>
-                    <button class="add-btn" onclick="addEntry('trainingsList', 'training-entry')">+ Add Another
-                        Completed Training</button>
-
-                    <div class="upzone" onclick="document.getElementById('zipFile').click()">
-                        <input type="file" id="zipFile" accept=".zip" onchange="updateFileName(this)"
-                            style="display:none">
-                        <span style="font-size: 24px;">📦</span>
-                        <p id="filePrompt" style="font-size: 11px; color: #666; font-weight: bold; margin-top: 5px;">
-                            Upload ONE ZIP file containing ALL certificates</p>
-                    </div>
+                    <button class="add-btn" onclick="addEntry('trainingsList')">+ Add Another Completed
+                        Training</button>
                 </div>
             </div>
 
-            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit Data →</button>
+            <button class="sbtn" id="sbtn" onclick="doSubmit()">Submit Information →</button>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1AknMhalsrYkKuo5WgaySAPAwQs0TiVOCvL21kjJMGTCddCQzWOmbLVS8XMiK4qTh/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQ4txywE8ho_v26MfceXn65LHWYzUXP-DNbjtFW4elgKZKvJVWY5B5Uo9M4mXrfTLe/exec";
 
         function toggleBox(id, val) {
             document.getElementById(id).style.display = (val === 'Yes') ? 'block' : 'none';
         }
 
-        function addEntry(containerId, className) {
+        function addEntry(containerId) {
             const container = document.getElementById(containerId);
-            const newEntry = container.firstElementChild.cloneNode(true);
-            newEntry.querySelectorAll('input').forEach(i => i.value = '');
-            container.appendChild(newEntry);
-        }
-
-        function updateFileName(inp) {
-            if (inp.files[0]) {
-                document.getElementById('filePrompt').textContent = "Selected: " + inp.files[0].name;
-                document.getElementById('filePrompt').style.color = "#c0392b";
-            }
+            const clone = container.firstElementChild.cloneNode(true);
+            clone.querySelectorAll('input').forEach(i => i.value = '');
+            container.appendChild(clone);
         }
 
         function showToast(msg, ok = true) {
@@ -390,45 +362,30 @@
         function doSubmit() {
             const btn = document.getElementById('sbtn');
             const id = document.getElementById('stuID').value.trim();
-            if (!id) { showToast('Student ID is required', false); return; }
+            if (!id) { showToast('ID is required', false); return; }
 
             let pCerts = []; document.querySelectorAll('.p-cert').forEach(i => { if (i.value) pCerts.push(i.value); });
             let pComps = []; document.querySelectorAll('.p-comp').forEach(i => { if (i.value) pComps.push(i.value); });
             let tCerts = []; document.querySelectorAll('.t-cert').forEach(i => { if (i.value) tCerts.push(i.value); });
             let tComps = []; document.querySelectorAll('.t-comp').forEach(i => { if (i.value) tComps.push(i.value); });
 
-            btn.disabled = true; btn.textContent = "Processing...";
+            btn.disabled = true; btn.textContent = "Submitting...";
 
             let payload = {
                 studentID: id,
                 studentName: document.getElementById('stuName').value,
+                department: document.getElementById('dept').value,
                 hasPlanned: document.querySelector('input[name="plan"]:checked').value,
                 plannedCert: pCerts.join(" | "),
                 plannedComp: pComps.join(" | "),
                 hasTraining: document.querySelector('input[name="tr"]:checked').value,
                 certificate: tCerts.join(" | "),
-                company: tComps.join(" | "),
-                fileData: null, fileName: "", mimeType: "application/zip"
+                company: tComps.join(" | ")
             };
 
-            const fileInp = document.getElementById('zipFile');
-            if (payload.hasTraining === 'Yes' && fileInp.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    payload.fileData = e.target.result.split(',')[1];
-                    payload.fileName = id + "_Certs.zip";
-                    sendData(payload);
-                };
-                reader.readAsDataURL(fileInp.files[0]);
-            } else {
-                sendData(payload);
-            }
-        }
-
-        function sendData(payload) {
             fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) })
-                .then(() => { showToast('Data submitted successfully!'); setTimeout(() => location.reload(), 2000); })
-                .catch(() => { showToast('Submission Error', false); document.getElementById('sbtn').disabled = false; });
+                .then(() => { showToast('Updated Successfully!'); setTimeout(() => location.reload(), 2000); })
+                .catch(() => { showToast('Error', false); btn.disabled = false; });
         }
     </script>
 </body>
